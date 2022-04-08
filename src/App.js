@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
 
-function App() {
+import * as actions from 'actions';
+// Redux
+import { connect, useSelector } from 'react-redux';
+
+import Navbar from 'components/Navbar';
+import Gallery from 'components/Gallery';
+
+const App = (props) => {
+  const imageData = useSelector((state) => {
+    return state.imageReducer;
+  });
+
+  useEffect(() => {
+    props.getImages();
+    console.log(imageData);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <Gallery imageData={imageData} limit={6} />
+    </>
   );
-}
+};
 
-export default App;
+export default connect(null, actions)(App);
