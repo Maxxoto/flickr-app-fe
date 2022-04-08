@@ -2,12 +2,15 @@ import axios from 'axios';
 
 import { imageConstants } from 'constants';
 
-export const getImages = () => async (dispatch) => {
+export const getImages = (queryParam) => async (dispatch) => {
   try {
     dispatch({ type: imageConstants.GET_IMAGE_REQUEST });
 
-    const URL = `${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_URL_ENDPOINT_IMAGES}`;
-
+    let URL = `${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_URL_ENDPOINT_IMAGES}`;
+    if (queryParam) {
+      URL += `?tags=${queryParam}`;
+    }
+    console.log(URL);
     const res = await axios.get(URL);
 
     dispatch({ type: imageConstants.GET_IMAGE_SUCCESS, payload: res.data });

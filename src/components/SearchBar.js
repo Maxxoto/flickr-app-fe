@@ -4,6 +4,11 @@ import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 
+import * as actions from 'actions';
+
+// Redux
+import { connect } from 'react-redux';
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -46,13 +51,32 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBar = () => {
+const SearchBar = (props) => {
+  const removeSpecialCharacter = (str) => {
+    const noSpecialCharacters = str.replace(/[^a-zA-Z0-9 ]/g, '');
+    return noSpecialCharacters;
+  };
+  const convertStringtoTags = (str) => {
+    const tags = str.replace(/ /g, ',');
+    return tags;
+  };
+
+  const handleChange = (event) => {
+    // Trigger when user press enter key
+    if (event.keyCode === 13) {
+      let tagsString = event.target.value;
+      tagsString = removeSpecialCharacter(tagsString);
+      tagsString = convertStringtoTags(tagsString);
+      props.getImages(tagsString);
+    }
+  };
   return (
     <Search>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
+        onKeyDown={(event) => handleChange(event)}
         placeholder='Search Here…'
         inputProps={{ 'aria-label': 'search' }}
       />
@@ -60,4 +84,4 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default connect(null, actions)(SearchBar);

@@ -17,7 +17,7 @@ const Gallery = (props) => {
     // If data 10 then
     // Every limit (6) images will be in one page
     // Every mod index+1 mod 6 == 0 then page will be incremented
-    console.log(imageData.length);
+    // console.log(imageData.length);
 
     let page = 0;
     let pagItem = [];
@@ -29,10 +29,10 @@ const Gallery = (props) => {
       }
 
       // Find page element and fill into it
-      console.log('Page now:' + page);
-      console.log(pagItem);
+      // console.log('Page now:' + page);
+      // console.log(pagItem);
       const pageNowItem = pagItem.findIndex((val) => val.page === page);
-      console.log('finding page on index :' + pageNowItem);
+      // console.log('finding page on index :' + pageNowItem);
       if (pageNowItem !== -1) {
         pagItem[pageNowItem].item.push(val);
       } else {
@@ -49,14 +49,14 @@ const Gallery = (props) => {
 
   const handlePageChange = (page) => {
     const selectedPagedImages = pagItemData.find((val) => val.page === page);
-    console.log(selectedPagedImages);
+    // console.log(selectedPagedImages);
 
     setItemData(selectedPagedImages?.item);
   };
 
   useEffect(() => {
     setIsLoading(props.imageData.isLoading);
-    console.log(props.imageData.payload);
+    // console.log(props.imageData.payload);
 
     if (
       props.imageData.payload !== false &&
@@ -75,8 +75,8 @@ const Gallery = (props) => {
         <CircularProgress sx={{ marginTop: '50px' }} />
       ) : itemData ? (
         <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
+          {itemData.map((item, index) => (
+            <ImageListItem key={index}>
               <img
                 src={`${item.media_url}`}
                 srcSet={`${item.media_url}`}
