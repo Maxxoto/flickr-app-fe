@@ -50,7 +50,6 @@ const Gallery = (props) => {
   const handlePageChange = (page) => {
     const selectedPagedImages = pagItemData.find((val) => val.page === page);
     // console.log(selectedPagedImages);
-
     setItemData(selectedPagedImages?.item);
   };
 
@@ -63,11 +62,13 @@ const Gallery = (props) => {
       props.imageData.payload?.data?.images?.length > 0
     ) {
       makePagination(props.imageData.payload.data.images);
-
-      // Set item data to current page by default page = 1
-      handlePageChange(1);
     }
   }, [props.imageData]);
+
+  useEffect(() => {
+    // Set item data to current page by default page = 1
+    handlePageChange(1);
+  }, [pagCount, pagItemData]);
 
   return (
     <center>
