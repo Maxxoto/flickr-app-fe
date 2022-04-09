@@ -75,7 +75,14 @@ const Gallery = (props) => {
       {isLoading ? (
         <CircularProgress sx={{ marginTop: '50px' }} />
       ) : itemData ? (
-        <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+        <ImageList
+          sx={{
+            maxWidth: { xs: 'auto', sm: '450px', md: '500px' },
+            height: 450,
+          }}
+          cols={3}
+          rowHeight={164}
+        >
           {itemData.map((item, index) => (
             <ImageListItem key={index}>
               <img
